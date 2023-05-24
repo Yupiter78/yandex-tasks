@@ -1,4 +1,4 @@
-function findAll(n, k) {
+/*function findAll(n, k) {
     let count = 0;
     let min = "";
     let max = "";
@@ -22,6 +22,38 @@ function findAll(n, k) {
     // перебор всех возможных чисел и проверка на счастливость
     for (let i = Math.pow(10, k-1); i < Math.pow(10, k); i++) {
         if (isLucky(i)) {
+            count++;
+            if (min === "") {
+                min = i.toString();
+            }
+            max = i.toString();
+        }
+    }
+
+    if (count === 0) {
+        return [0];
+    } else {
+        return [count, min, max];
+    }
+}*/
+
+function findAll(n, k) {
+    let count = 0;
+    let min = "";
+    let max = "";
+
+    for (let i = Math.pow(10, k-1); i < Math.pow(10, k); i++) {
+        const digits = i.toString().split('').map(Number);
+        let sum = 0;
+        let isLucky = true;
+        for (let j = 0; j < digits.length; j++) {
+            if (digits[j] < (j+1)) { // проверка на неубывающий порядок цифр
+                isLucky = false;
+                break;
+            }
+            sum += digits[j];
+        }
+        if (isLucky && sum === n) { // проверка на счастливое число
             count++;
             if (min === "") {
                 min = i.toString();
